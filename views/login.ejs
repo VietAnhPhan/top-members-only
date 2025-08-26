@@ -1,0 +1,12 @@
+<%- include('header', {title: title}) %>
+    <div class="form__submit">
+        <form action="/users/login" method="post">
+            <label for="user_name">User name: </label>
+            <input type="text" id="user_name" name="user_name" required>
+            <label for="password">Password name: </label>
+            <input type="text" id="password" name="password" required>
+            <button type="submit">Login now</button>
+        </form>
+    </div>
+
+    <%- include('footer', {title: title}) %>

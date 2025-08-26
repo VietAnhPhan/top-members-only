@@ -1,0 +1,12 @@
+form{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.form__submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
