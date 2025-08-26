@@ -83,8 +83,6 @@ async function loginPost(req, res) {
   try {
     const user = {
       user_name: req.body.user_name,
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
       password: req.body.password,
     };
 
