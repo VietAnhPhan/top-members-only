@@ -1,0 +1,15 @@
+<%- include('header', {title: title}) %>
+    <div class="form__submit">
+        <form action="/posts/create" method="post">
+            <label for="title">Title: </label>
+            <input type="text" id="post__title" name="title" required>
+
+            <label for="body">Body: </label>
+            <textarea name="body" id="post__body"></textarea>
+
+            <button type="submit">Post now</button>
+        </form>
+    </div>
+    <%- include('partials/errors.ejs') %>
+
+        <%- include('footer', {title: title}) %>

@@ -1,8 +1,16 @@
 <%- include('header', {title: title}) %>
 
  <% if (locals.user) {%>
-    <h1>WELCOME BACK <%= user.username %></h1>
-    <a href="/log-out">LOG OUT</a>
+    <h1>Posts here:</h1>
+    <% if(locals.posts) {%>
+      <% locals.posts.forEach(post=>{ %>
+      <div class="post">
+        <p><%=post.title%></p>
+        <p><%=post.body %></p>
+      </div>
+   <% }) %>
+    
+      <% } %>
   <% } else { %>
     <%- include('login') %>
 <%}%>
