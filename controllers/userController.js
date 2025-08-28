@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const  bcrypt  = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 
 const db = require("../models/user");
 
@@ -15,14 +15,12 @@ async function getAllUsers(req, res) {
 
 async function getUserByUsername(req, res) {
   try {
-    const user_name = {
-      user_name: req.body.user_name,
-    };
-
-    await db.getUserByUsername(user_name);
-    res.send(`users/${req.params.user_name}`);
+    if (req.user) {
+      const user = await db.getUserByUsername(req.params.user_name);
+      res.render("userDetails", { title: "User Info", user: user });
+    } else res.redirect("/");
   } catch (error) {
-    console.log(`Error getting the user: ${user}`);
+    console.log(`Error getting the user:`);
     res.status(500).send("Can not getting the user");
   }
 }

@@ -29,7 +29,9 @@ userRouter.post(
   userController.createUserPost
 );
 
-userRouter.get("/login", userController.loginGet);
-userRouter.post("/login", userController.loginPost);
+userRouter.get("/:user_name", userController.getUserByUsername);
+
+// userRouter.get("/login", userController.loginGet);
+// userRouter.post("/login", userController.loginPost);
 
 module.exports = userRouter;

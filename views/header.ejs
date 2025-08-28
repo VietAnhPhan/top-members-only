@@ -11,3 +11,20 @@
 </head>
 
 <body>
+    <header>
+        <ul>
+            <div class="header__brand"><a href="/">Home</a></div>
+            <div class="header__account">
+                <ul>
+                    <% if(user) { %>
+                        <li><a href="/users/<%=user.user_name%>">Hello, <%=user.user_name%></a></li>
+                        <li><a href="/post/create">New Post</a></li>
+                        <li><a href="/log-out">Log out</a></li>
+                        <% } else {%>
+                            <li><a href="/log-in">Log in</a></li>
+                            <% } %>
+                </ul>
+            </div>
+
+        </ul>
+    </header>

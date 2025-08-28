@@ -10,3 +10,14 @@ form{
     align-items: center;
 }
 
+header ul{
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+}
+
+.header__account ul{
+    display: flex;
+    gap: 10px;
+}
