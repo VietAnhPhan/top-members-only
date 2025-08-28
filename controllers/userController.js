@@ -1,11 +1,11 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
-const db = require("../models/user");
+const userModel = require("../models/user");
 
 async function getAllUsers(req, res) {
   try {
-    const users = await db.getAllUsers();
+    const users = await userModel.getAllUsers();
     res.send(users);
   } catch (error) {
     console.log(`Error retrieving user: ${user}`);
@@ -16,12 +16,25 @@ async function getAllUsers(req, res) {
 async function getUserByUsername(req, res) {
   try {
     if (req.user) {
-      const user = await db.getUserByUsername(req.params.user_name);
+      const user = await userModel.getUserByUsername(req.params.user_name);
+      console.log(user);
       res.render("userDetails", { title: "User Info", user: user });
     } else res.redirect("/");
   } catch (error) {
-    console.log(`Error getting the user:`);
+    console.log(`Error getting the user: ${error}`);
     res.status(500).send("Can not getting the user");
+  }
+}
+
+async function getPostsByUsername(req, res) {
+  try {
+    if (req.user) {
+      const posts = await userModel.getPostsByUsername(req.params.user_name);
+      res.render("userPosts", { title: "User Posts", posts: posts });
+    } else res.redirect("/");
+  } catch (error) {
+    console.log(`Error getting the posts:${error}`);
+    res.status(500).send("Can not getting the posts");
   }
 }
 
@@ -49,7 +62,7 @@ async function createUserPost(req, res) {
       password: hashedPassword,
     };
 
-    await db.createUser(user);
+    await userModel.createUser(user);
     res.redirect("/");
   } catch (error) {
     console.log(`Error creating user: ${error}`);
@@ -65,7 +78,7 @@ async function updateUser(req, res) {
       password: req.body.password,
     };
 
-    await db.updateUser(user);
+    await userModel.updateUser(user);
     res.send(`/users/${req.body.user_name}`);
   } catch (error) {
     console.log(`Error updating user: ${user}`);
@@ -79,7 +92,7 @@ async function deleteUser(req, res) {
       user_name: req.body.user_name,
     };
 
-    await db.deleteUser(user_name);
+    await userModel.deleteUser(user_name);
     res.send("/");
   } catch (error) {
     console.log(`Error deleting user: ${user}`);
@@ -97,7 +110,7 @@ async function loginPost(req, res) {
   //     user_name: req.body.user_name,
   //     password: req.body.password,
   //   };
-  //   await db.createUser(user);
+  //   await user.createUser(user);
   //   res.render("/");
   // } catch (error) {
   //   console.log(`Error creating user: ${error}`);
@@ -114,4 +127,5 @@ module.exports = {
   deleteUser,
   loginGet,
   loginPost,
+  getPostsByUsername,
 };

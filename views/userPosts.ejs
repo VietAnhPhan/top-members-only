@@ -1,0 +1,26 @@
+<%- include('header', {title: title}) %>
+
+    <h1>Your Posts</h1>
+
+    <% if (locals.posts) {%>
+        <ul>
+
+
+            <% locals.posts.forEach(post=>{ %>
+                <li>
+                    <div class="post">
+                        <p>
+                            <%=post.title%>
+                        </p>
+                        <p>
+                            <%=post.body %>
+                        </p>
+                    </div>
+                </li>
+                <% })} %>
+
+
+        </ul>
+
+
+        <%- include('footer', {title: title}) %>

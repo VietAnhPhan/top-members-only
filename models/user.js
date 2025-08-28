@@ -15,6 +15,15 @@ async function getUserByUsername(username) {
   return rows[0];
 }
 
+async function getPostsByUsername(username) {
+  const { rows } = await pool.query(
+    "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id WHERE users.user_name = ($1)",
+    [username]
+  );
+
+  return rows;
+}
+
 async function createUser(user) {
   await pool.query(
     "INSERT INTO users (first_name, last_name, user_name, password) VALUES (($1), ($2), ($3), ($4))",
@@ -39,4 +48,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getPostsByUsername,
 };

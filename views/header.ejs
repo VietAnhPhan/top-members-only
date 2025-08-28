@@ -18,6 +18,7 @@
                 <ul>
                     <% if(locals.user) { %>
                         <li><a href="/users/<%=user.user_name%>">Hello, <%=user.user_name%></a></li>
+                         <li><a href="/users/<%=user.user_name%>/posts">My posts</a></li>
                         <li><a href="/posts/create">New Post</a></li>
                         <li><a href="/log-out">Log out</a></li>
                         <% } else {%>

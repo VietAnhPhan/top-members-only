@@ -30,6 +30,7 @@ userRouter.post(
 );
 
 userRouter.get("/:user_name", userController.getUserByUsername);
+userRouter.get("/:user_name/posts", userController.getPostsByUsername);
 
 // userRouter.get("/login", userController.loginGet);
 // userRouter.post("/login", userController.loginPost);
