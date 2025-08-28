@@ -1,3 +1,6 @@
+const { validationResult } = require("express-validator");
+const  bcrypt  = require("bcryptjs");
+
 const db = require("../models/user");
 
 async function getAllUsers(req, res) {
@@ -30,15 +33,26 @@ async function createUserGet(req, res) {
 
 async function createUserPost(req, res) {
   try {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("createUser", {
+        title: "Failed to create the user",
+        errors: errors.array(),
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
     const user = {
       user_name: req.body.user_name,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
-      password: req.body.password,
+      password: hashedPassword,
     };
 
     await db.createUser(user);
-    res.render("/");
+    res.redirect("/");
   } catch (error) {
     console.log(`Error creating user: ${error}`);
     res.status(500).send("Can not create new user");
@@ -80,18 +94,17 @@ async function loginGet(req, res) {
 }
 
 async function loginPost(req, res) {
-  try {
-    const user = {
-      user_name: req.body.user_name,
-      password: req.body.password,
-    };
-
-    await db.createUser(user);
-    res.render("/");
-  } catch (error) {
-    console.log(`Error creating user: ${error}`);
-    res.status(500).send("Can not create new user");
-  }
+  // try {
+  //   const user = {
+  //     user_name: req.body.user_name,
+  //     password: req.body.password,
+  //   };
+  //   await db.createUser(user);
+  //   res.render("/");
+  // } catch (error) {
+  //   console.log(`Error creating user: ${error}`);
+  //   res.status(500).send("Can not create new user");
+  // }
 }
 
 module.exports = {

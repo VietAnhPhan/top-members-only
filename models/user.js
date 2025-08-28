@@ -8,7 +8,7 @@ async function getAllUsers() {
 
 async function getUserByUsername(username) {
   const { rows } = await pool.query(
-    "SELECT * FROM users WHERE user_name = ($)1",
+    "SELECT * FROM users WHERE user_name = ($1)",
     [username]
   );
 

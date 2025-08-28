@@ -1,6 +1,6 @@
 <%- include('header', {title: title}) %>
     <div class="form__submit">
-        <form action="/users/create" method="post">
+        <form action="/users/sign-up" method="post">
             <label for="first_name">First name: </label>
             <input type="text" id="first_name" name="first_name" required>
 
@@ -11,13 +11,14 @@
             <input type="text" id="user_name" name="user_name" required>
 
             <label for="password">Password: </label>
-            <input type="text" id="password" name="password" required>
+            <input type="password" id="password" name="password" required>
 
-            <label for="password">Repeat password: </label>
-            <input type="text" id="password" name="repeat_password" required>
+            <label for="repeat_password">Repeat password: </label>
+            <input type="password" id="repeat_password" name="repeat_password" required>
 
             <button type="submit">Register now</button>
         </form>
     </div>
+    <%- include('partials/errors.ejs') %>
 
-    <%- include('footer', {title: title}) %>
+        <%- include('footer', {title: title}) %>

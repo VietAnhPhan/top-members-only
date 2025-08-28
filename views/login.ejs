@@ -1,10 +1,12 @@
 <%- include('header', {title: title}) %>
+
+     <h1>please log in</h1>
     <div class="form__submit">
-        <form action="/users/login" method="post">
+        <form action="/log-in" method="post">
             <label for="user_name">User name: </label>
             <input type="text" id="user_name" name="user_name" required>
             <label for="password">Password name: </label>
-            <input type="text" id="password" name="password" required>
+            <input type="password" id="password" name="password" required>
             <button type="submit">Login now</button>
         </form>
     </div>
