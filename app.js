@@ -39,6 +39,7 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 
 app.use(async (req, res, next) => {
   res.locals.posts = await posts.getAllPosts();
+  res.locals.user = req.user ? req.user : null;
   next();
 });
 

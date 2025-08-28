@@ -42,6 +42,13 @@ async function deleteUser(user) {
   await pool.query("DELETE users WHERE user_name = ($1)", [user.user_name]);
 }
 
+async function upgradeMembership(user) {
+  await pool.query(
+    "UPDATE users SET membership_status = 'private' WHERE user_name = $1",
+    [user.user_name]
+  );
+}
+
 module.exports = {
   getAllUsers,
   getUserByUsername,
@@ -49,4 +56,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getPostsByUsername,
+  upgradeMembership,
 };

@@ -38,6 +38,22 @@ async function getPostsByUsername(req, res) {
   }
 }
 
+function upgradeMembershipGet(req, res) {
+  if (req.user) {
+    res.render("upgradeMembership", { title: "Upgrade membership" });
+  }
+}
+
+async function upgradeMembershipPost(req, res) {
+  if (req.user) {
+    const secretPasscode = req.body.secret_passcode;
+    if (secretPasscode === "privatemember") {
+      await userModel.upgradeMembership(req.user);
+      res.render("userDetails", { title: "User info" });
+    }
+  }
+}
+
 async function createUserGet(req, res) {
   res.render("createUser", { title: "Create new member" });
 }
@@ -128,4 +144,6 @@ module.exports = {
   loginGet,
   loginPost,
   getPostsByUsername,
+  upgradeMembershipGet,
+  upgradeMembershipPost,
 };

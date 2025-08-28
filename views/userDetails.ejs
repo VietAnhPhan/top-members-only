@@ -1,9 +1,23 @@
 <%- include('header', {title: title}) %>
-
-    <h1>Your Info</h1>
-    <p>First name: <%=user.first_name%></p>
-    <p>Last name: <%=user.last_name%></p>
-    <p>username: <%=user.user_name %></p>
-   
+    <div class="content__wrapper">
+        <h1>Your Info</h1>
+        <% if(user) {%>
+            <p>First name: <%=user.first_name%>
+            </p>
+            <p>Last name: <%=user.last_name%>
+            </p>
+            <p>username: <%=user.user_name %>
+            </p>
+            <p>Member status: <%=user.membership_status %>
+            </p>
+            <p>Joined from: <%=user.created_at %>
+            </p>
+            <% if(user.membership_status==='standard' ){ %>
+                <a href="/users/<%=user.user_name%>/upgrade-membership">Join the club</a>
+                <% } else { %>
+                    <% if(user.membership_status==='private' ) {%>
+                        <a href="/users/<%=user.user_name%>/downgrade-membership">Leave the club</a>
+                        <% }}} %>
+    </div>
 
     <%- include('footer', {title: title}) %>

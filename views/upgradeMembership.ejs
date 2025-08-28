@@ -1,0 +1,10 @@
+<%- include('header', {title: title}) %>
+    <div class="content__wrapper">
+        <h1>Upgrade Membership</h1>
+        <form action="/users/<%=user.user_name%>/upgrade-membership" method="post">
+            <label for="secret_passcode">secret passcode</label>
+            <input type="text" id="secret_passcode" name="secret_passcode">
+            <button type="submit">Join the club</button>
+        </form>
+    </div>
+    <%- include('footer') %>
