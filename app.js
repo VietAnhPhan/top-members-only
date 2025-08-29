@@ -44,11 +44,25 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  console.log(res.locals.posts);
+  // console.log(res.locals.posts);
   res.render("index", { title: "Login", user: req.user });
 });
 
-app.use("/users", userRouter);
+app.use(
+  "/users",
+  (req, res, next) =>
+    passport.authenticate("local", function (err, user, info, status) {
+      if (err) {
+        return next(err);
+      }
+      if (!req.user) {
+        return res.redirect("/");
+      }
+      next();
+    })(req, res, next),
+  userRouter
+);
+
 app.use("/posts", postRouter);
 
 app.use("/", authRouter);

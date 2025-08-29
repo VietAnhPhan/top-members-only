@@ -15,7 +15,7 @@ passport.use(
           "SELECT * FROM users WHERE user_name = $1",
           [username]
         );
-        console.log("call strategy");
+
         const user = rows[0];
 
         if (!user) {

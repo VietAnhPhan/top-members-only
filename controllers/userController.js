@@ -29,7 +29,14 @@ async function getUserByUsername(req, res) {
 async function getPostsByUsername(req, res) {
   try {
     if (req.user) {
-      const posts = await userModel.getPostsByUsername(req.params.user_name);
+      let posts = [];
+
+      if (!req.user.role === "admin") {
+        posts = await userModel.getPostsByUsername(req.params.user_name);
+      } else if (req.user.role === "admin") {
+        posts = await userModel.getAllPosts();
+      }
+
       res.render("userPosts", { title: "User Posts", posts: posts });
     } else res.redirect("/");
   } catch (error) {
@@ -71,11 +78,18 @@ async function createUserPost(req, res) {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+    let userRole = "";
+
+    if (req.body.admin_role === "admin") {
+      userRole = "admin";
+    }
+
     const user = {
       user_name: req.body.user_name,
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       password: hashedPassword,
+      role: userRole,
     };
 
     await userModel.createUser(user);

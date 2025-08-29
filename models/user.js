@@ -24,11 +24,32 @@ async function getPostsByUsername(username) {
   return rows;
 }
 
+async function getAllPosts() {
+  const { rows } = await pool.query("SELECT * FROM posts");
+
+  return rows;
+}
+
 async function createUser(user) {
-  await pool.query(
-    "INSERT INTO users (first_name, last_name, user_name, password) VALUES (($1), ($2), ($3), ($4))",
-    [user.first_name, user.last_name, user.user_name, user.password]
-  );
+  if (user.role) {
+    await pool.query(
+      "INSERT INTO users (first_name, last_name, user_name, password, role) VALUES ($1, $2, $3, $4, $5)",
+      [
+        user.first_name,
+        user.last_name,
+        user.user_name,
+        user.password,
+        user.role,
+      ]
+    );
+  } else if (!user.role) {
+    if (user.role) {
+      await pool.query(
+        "INSERT INTO users (first_name, last_name, user_name, password) VALUES ($1, $2, $3, $4)",
+        [user.first_name, user.last_name, user.user_name, user.password]
+      );
+    }
+  }
 }
 
 async function updateUser(user) {
@@ -57,4 +78,5 @@ module.exports = {
   deleteUser,
   getPostsByUsername,
   upgradeMembership,
+  getAllPosts,
 };

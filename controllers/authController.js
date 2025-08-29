@@ -1,5 +1,5 @@
 async function loginGet(req, res) {
-  res.render("login", { title: "User Login" });
+  res.render("index", { title: "User Login" });
 }
 
 module.exports = {

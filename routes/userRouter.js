@@ -1,6 +1,7 @@
 const express = require("express");
 const { body } = require("express-validator");
 const db = require("../models/user");
+const passport = require("passport");
 
 const userController = require("../controllers/userController");
 const userRouter = express.Router();
@@ -32,8 +33,14 @@ userRouter.post(
 userRouter.get("/:user_name", userController.getUserByUsername);
 userRouter.get("/:user_name/posts", userController.getPostsByUsername);
 
-userRouter.get("/:user_name/upgrade-membership", userController.upgradeMembershipGet);
-userRouter.post("/:user_name/upgrade-membership", userController.upgradeMembershipPost);
+userRouter.get(
+  "/:user_name/upgrade-membership",
+  userController.upgradeMembershipGet
+);
+userRouter.post(
+  "/:user_name/upgrade-membership",
+  userController.upgradeMembershipPost
+);
 
 // userRouter.get("/login", userController.loginGet);
 // userRouter.post("/login", userController.loginPost);
