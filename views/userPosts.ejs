@@ -1,8 +1,9 @@
 <%- include('header', {title: title}) %>
     <div class="content__wrapper">
-    <h1><% if(!locals.user.role==='admin') {%>
+        <% const isAdmin = locals.user.role === 'admin'? true:false %>
+    <h1><% if(!isAdmin) {%>
         Your posts
-    <%} else if (locals.user.role==='admin'){%>
+    <%} else if (isAdmin){%>
         All posts
         <% } %>
     </h1>
@@ -24,11 +25,14 @@
                             <%=post.body %>
                         </p>
                         <p>
-                            <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | Written At: <%=post.created_at %>
+                            <% if(isAdmin) {%>
+
+
+                                <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | <% } %> Written At: <%=post.created_at %>
                         </p>
                     </div>
-                    <form action="<%=post.id%>/delete" method="post">
-                        <input type="number" hidden name="post_id" value="<%=post.id%>">
+                    <form action="/posts/<%=post.post_id%>/delete" method="post">
+                        <input type="number" hidden name="post_id" value="<%=post.post_id%>">
                         <button type="submit">Delete</button>
                     </form>
                 </li>
@@ -48,9 +52,15 @@
                         <p>
                             <%=post.body %>
                         </p>
+                         <p>
+                            <% if(isAdmin) {%>
+
+
+                                <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | <% } %> Written At: <%=post.created_at %>
+                        </p>
                     </div>
-                    <form action="<%=post.id%>/restore" method="post">
-                        <input type="number" hidden name="post_id" value="<%=post.id%>">
+                    <form action="/posts/<%=post.post_id%>/restore" method="post">
+                        <input type="number" hidden name="post_id" value="<%=post.post_id%>">
                         <button type="submit">Publish</button>
                     </form>
                 </li>

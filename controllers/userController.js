@@ -17,7 +17,6 @@ async function getUserByUsername(req, res) {
   try {
     if (req.user) {
       const user = await userModel.getUserByUsername(req.params.user_name);
-      console.log(user);
       res.render("userDetails", { title: "User Info", user: user });
     } else res.redirect("/");
   } catch (error) {
@@ -31,8 +30,9 @@ async function getPostsByUsername(req, res) {
     // if (req.user) {
       let posts = [];
 
-      if (!req.user.role === "admin") {
-        posts = await userModel.getPostsByUsername(req.params.user_name);
+      if (req.user.role !== "admin") {
+        res.locals.posts = await userModel.getPostsByUsername(req.params.user_name);
+        console.log(res.locals.posts)
       } else if (req.user.role === "admin") {
         // posts = await userModel.get();
       }

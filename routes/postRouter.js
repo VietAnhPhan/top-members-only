@@ -13,7 +13,8 @@ postRouter.post(
   postController.createPostPost
 );
 
-
+postRouter.post("/:post_id/delete", postController.deletePost);
+postRouter.post("/:post_id/restore", postController.restorePost);
 
 
 // userRouter.get("/login", userController.loginGet);

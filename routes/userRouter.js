@@ -1,7 +1,6 @@
 const express = require("express");
 const { body } = require("express-validator");
 const db = require("../models/user");
-const passport = require("passport");
 
 const userController = require("../controllers/userController");
 const postController = require("../controllers/postControllers");
@@ -43,8 +42,8 @@ userRouter.post(
   userController.upgradeMembershipPost
 );
 
-userRouter.post("/:user_name/posts/:post_id/delete", postController.deletePost);
-userRouter.post("/:user_name/posts/:post_id/restore", postController.restorePost);
+// userRouter.post("/:user_name/posts/:post_id/delete", postController.deletePost);
+// userRouter.post("/:user_name/posts/:post_id/restore", postController.restorePost);
 
 // userRouter.get("/login", userController.loginGet);
 // userRouter.post("/login", userController.loginPost);

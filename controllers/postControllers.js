@@ -58,13 +58,13 @@ async function deletePost(req, res) {
   try {
 
     const postId = req.body.post_id;
-   
+    console.log(postId)
 
     await db.deletePostById(postId);
-    res.redirect("..");
+    res.redirect(`/users/${req.user.user_name}/posts`);
   } catch (error) {
     console.log(`Error deleting the post: ${error}`);
-    res.status(500).send("Can not delete new post");
+    res.status(500).send("Can not delete the post");
   }
 }
 
@@ -75,7 +75,7 @@ async function restorePost(req, res) {
     
 
     await db.restorePostById(postId);
-    res.redirect("..");
+    res.redirect(`/users/${req.user.user_name}/posts`);
   } catch (error) {
     console.log(`Error restore the post: ${error}`);
     res.status(500).send("Can not restore the post");

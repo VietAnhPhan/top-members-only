@@ -17,7 +17,7 @@ async function getUserByUsername(username) {
 
 async function getPostsByUsername(username) {
   const { rows } = await pool.query(
-    "SELECT * FROM posts INNER JOIN users ON posts.user_id = users.id WHERE users.user_name = ($1)",
+    "SELECT p.id AS post_id, u.id AS user_id, u.user_name, title, body, first_name, last_name, p.created_at, p.is_active FROM posts AS p INNER JOIN users AS u ON p.user_id = u.id WHERE u.user_name = $1",
     [username]
   );
 
