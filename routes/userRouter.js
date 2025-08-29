@@ -4,6 +4,7 @@ const db = require("../models/user");
 const passport = require("passport");
 
 const userController = require("../controllers/userController");
+const postController = require("../controllers/postControllers");
 const userRouter = express.Router();
 
 userRouter.get("/", userController.getAllUsers);
@@ -41,6 +42,9 @@ userRouter.post(
   "/:user_name/upgrade-membership",
   userController.upgradeMembershipPost
 );
+
+userRouter.post("/:user_name/posts/:post_id/delete", postController.deletePost);
+userRouter.post("/:user_name/posts/:post_id/restore", postController.restorePost);
 
 // userRouter.get("/login", userController.loginGet);
 // userRouter.post("/login", userController.loginPost);

@@ -28,17 +28,17 @@ async function getUserByUsername(req, res) {
 
 async function getPostsByUsername(req, res) {
   try {
-    if (req.user) {
+    // if (req.user) {
       let posts = [];
 
       if (!req.user.role === "admin") {
         posts = await userModel.getPostsByUsername(req.params.user_name);
       } else if (req.user.role === "admin") {
-        posts = await userModel.getAllPosts();
+        // posts = await userModel.get();
       }
 
-      res.render("userPosts", { title: "User Posts", posts: posts });
-    } else res.redirect("/");
+      res.render("userPosts", { title: "User Posts"});
+    // } else res.redirect("/");
   } catch (error) {
     console.log(`Error getting the posts:${error}`);
     res.status(500).send("Can not getting the posts");

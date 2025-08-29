@@ -54,6 +54,34 @@ async function createPostPost(req, res) {
   }
 }
 
+async function deletePost(req, res) {
+  try {
+
+    const postId = req.body.post_id;
+   
+
+    await db.deletePostById(postId);
+    res.redirect("..");
+  } catch (error) {
+    console.log(`Error deleting the post: ${error}`);
+    res.status(500).send("Can not delete new post");
+  }
+}
+
+async function restorePost(req, res) {
+  try {
+
+    const postId = req.body.post_id;
+    
+
+    await db.restorePostById(postId);
+    res.redirect("..");
+  } catch (error) {
+    console.log(`Error restore the post: ${error}`);
+    res.status(500).send("Can not restore the post");
+  }
+}
+
 // async function updateUser(req, res) {
 //   try {
 //     const user = {
@@ -89,4 +117,6 @@ module.exports = {
   getPostByUsername,
   createPostGet,
   createPostPost,
+  deletePost,
+  restorePost
 };

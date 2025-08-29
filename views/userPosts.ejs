@@ -1,12 +1,45 @@
 <%- include('header', {title: title}) %>
     <div class="content__wrapper">
-    <h1>Your Posts</h1>
+    <h1><% if(!locals.user.role==='admin') {%>
+        Your posts
+    <%} else if (locals.user.role==='admin'){%>
+        All posts
+        <% } %>
+    </h1>
+
 
     <% if (locals.posts) {%>
         <ul>
+            <% const activePosts = locals.posts.filter(post=> post.is_active) %>
+            <% const inActivePosts = locals.posts.filter(post=> !post.is_active) %>
 
+            <% activePosts.forEach(post=>{ %>
+                
+                <li>
+                    <div class="post">
+                        <p>
+                            <%=post.title%>
+                        </p>
+                        <p>
+                            <%=post.body %>
+                        </p>
+                        <p>
+                            <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | Written At: <%=post.created_at %>
+                        </p>
+                    </div>
+                    <form action="<%=post.id%>/delete" method="post">
+                        <input type="number" hidden name="post_id" value="<%=post.id%>">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+                <% }) %>
 
-            <% locals.posts.forEach(post=>{ %>
+                  <% if (inActivePosts.length>0) {%>
+                    <hr>
+                    <% } %>
+
+                  <% inActivePosts.forEach(post=>{ %>
+                
                 <li>
                     <div class="post">
                         <p>
@@ -16,6 +49,10 @@
                             <%=post.body %>
                         </p>
                     </div>
+                    <form action="<%=post.id%>/restore" method="post">
+                        <input type="number" hidden name="post_id" value="<%=post.id%>">
+                        <button type="submit">Publish</button>
+                    </form>
                 </li>
                 <% })} %>
 
