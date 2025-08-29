@@ -58,7 +58,6 @@ async function deletePost(req, res) {
   try {
 
     const postId = req.body.post_id;
-    console.log(postId)
 
     await db.deletePostById(postId);
     res.redirect(`/users/${req.user.user_name}/posts`);
