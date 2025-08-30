@@ -28,16 +28,17 @@ async function getUserByUsername(req, res) {
 async function getPostsByUsername(req, res) {
   try {
     // if (req.user) {
-      let posts = [];
+    let posts = [];
 
-      if (req.user.role !== "admin") {
-        res.locals.posts = await userModel.getPostsByUsername(req.params.user_name);
-        console.log(res.locals.posts)
-      } else if (req.user.role === "admin") {
-        // posts = await userModel.get();
-      }
+    if (req.user.role !== "admin") {
+      res.locals.posts = await userModel.getPostsByUsername(
+        req.params.user_name
+      );
+    } else if (req.user.role === "admin") {
+      // posts = await userModel.get();
+    }
 
-      res.render("userPosts", { title: "User Posts"});
+    res.render("userPosts", { title: "User Posts" });
     // } else res.redirect("/");
   } catch (error) {
     console.log(`Error getting the posts:${error}`);
@@ -65,7 +66,7 @@ async function createUserGet(req, res) {
   res.render("createUser", { title: "Create new member" });
 }
 
-async function createUserPost(req, res) {
+async function createUserPost(req, res, next) {
   try {
     const errors = validationResult(req);
 
@@ -93,7 +94,17 @@ async function createUserPost(req, res) {
     };
 
     await userModel.createUser(user);
-    res.redirect("/");
+    const createdUser = await userModel.getUserByUsername(user.user_name);
+
+    req.login(createdUser, (err) => {
+      if (!err) {
+        res.redirect("/");
+      } else {
+        next(err);
+      }
+    });
+
+    // res.redirect("/");
   } catch (error) {
     console.log(`Error creating user: ${error}`);
     res.status(500).send("Can not create new user");
