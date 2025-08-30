@@ -1,73 +1,66 @@
 <%- include('header', {title: title}) %>
     <div class="content__wrapper">
         <% const isAdmin = locals.user.role === 'admin'? true:false %>
-    <h1><% if(!isAdmin) {%>
+    <h1 class="content__title"><% if(!isAdmin) {%>
         Your posts
     <%} else if (isAdmin){%>
-        All posts
+        All thoughts
         <% } %>
     </h1>
 
 
     <% if (locals.posts) {%>
-        <ul>
-            <% const activePosts = locals.posts.filter(post=> post.is_active) %>
-            <% const inActivePosts = locals.posts.filter(post=> !post.is_active) %>
-
-            <% activePosts.forEach(post=>{ %>
-                
-                <li>
-                    <div class="post">
-                        <p>
-                            <%=post.title%>
-                        </p>
-                        <p>
-                            <%=post.body %>
-                        </p>
-                        <p>
-                            <% if(isAdmin) {%>
-
-
-                                <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | <% } %> Written At: <%=post.created_at %>
-                        </p>
-                    </div>
-                    <form action="/posts/<%=post.post_id%>/delete" method="post">
-                        <input type="number" hidden name="post_id" value="<%=post.post_id%>">
-                        <button type="submit">Delete</button>
-                    </form>
-                </li>
-                <% }) %>
-
-                  <% if (inActivePosts.length>0) {%>
-                    <hr>
-                    <% } %>
-
-                  <% inActivePosts.forEach(post=>{ %>
-                
-                <li>
-                    <div class="post">
-                        <p>
-                            <%=post.title%>
-                        </p>
-                        <p>
-                            <%=post.body %>
-                        </p>
-                         <p>
-                            <% if(isAdmin) {%>
-
-
-                                <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | <% } %> Written At: <%=post.created_at %>
-                        </p>
-                    </div>
-                    <form action="/posts/<%=post.post_id%>/restore" method="post">
-                        <input type="number" hidden name="post_id" value="<%=post.post_id%>">
-                        <button type="submit">Publish</button>
-                    </form>
-                </li>
-                <% })} %>
-
-
-        </ul>
+        <div class="content__inner">
+            <ul class="post_list">
+                <% const activePosts = locals.posts.filter(post=> post.is_active) %>
+                <% const inActivePosts = locals.posts.filter(post=> !post.is_active) %>
+                <% activePosts.forEach(post=>{ %>
+            
+                    <li>
+                        <div class="post">
+                            <p>
+                                <%=post.title%>
+                            </p>
+                            <p>
+                                <%=post.body %>
+                            </p>
+                            <p>
+                                <% if(isAdmin) {%>
+                                    <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | <% } %> Written At: <%=post.created_at %>
+                            </p>
+                        </div>
+                        <form action="/posts/<%=post.post_id%>/delete" method="post">
+                            <input type="number" hidden name="post_id" value="<%=post.post_id%>">
+                            <button class="btn__submit" type="submit">Delete</button>
+                        </form>
+                    </li>
+                    <% }) %>
+                      <% if (inActivePosts.length>0) {%>
+                        <hr>
+                        <% } %>
+                      <% inActivePosts.forEach(post=>{ %>
+            
+                    <li>
+                        <div class="post">
+                            <p>
+                                <%=post.title%>
+                            </p>
+                            <p>
+                                <%=post.body %>
+                            </p>
+                             <p>
+                                <% if(isAdmin) {%>
+                                    <%=post.first_name %> <%=post.last_name %> | <%=post.user_name %> | <% } %> Written At: <%=post.created_at %>
+                            </p>
+                        </div>
+                        <form action="/posts/<%=post.post_id%>/restore" method="post">
+                            <input type="number" hidden name="post_id" value="<%=post.post_id%>">
+                            <button class="btn__submit" type="submit">Publish</button>
+                        </form>
+                    </li>
+                    <% })} %>
+            </ul>
+        </div>
         </div>
 
         <%- include('footer', {title: title}) %>

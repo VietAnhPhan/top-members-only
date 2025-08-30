@@ -17,9 +17,9 @@
             <div class="header__account">
                 <ul>
                     <% if(locals.user) { %>
-                        <li><a href="/users/<%=user.user_name%>">Hello, <%=user.user_name%></a></li>
-                         <li><a href="/users/<%=user.user_name%>/posts">My posts</a></li>
-                        <li><a href="/posts/create">New Post</a></li>
+                        <li><a href="/users/<%=user.user_name%>">Hello, <%=user.user_name%> (Membership: <%=user.membership_status %>)</a></li>
+                         <li><a href="/users/<%=user.user_name%>/posts">My thoughts</a></li>
+                        <li><a href="/posts/create">New thought</a></li>
                         <li><a href="/log-out">Log out</a></li>
                         <% } else {%>
                             <li><a href="/log-in">Log in</a></li>
@@ -30,4 +30,4 @@
 
         </ul>
     </header>
-    <div class="container">
+    <main class="container">

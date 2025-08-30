@@ -1,10 +1,19 @@
-     <h1>please log in</h1>
-    <div class="form__submit">
+<div class="content__wrapper_col">
+    <div class="content__title_login">
+        <h1>Share your thougths with us...</h1>
+        <h3>Hundred thoundsand developers here...</h3>
+    </div>
+    <div class="form__submit form__submit_login">
         <form action="/log-in" method="post">
             <label for="user_name">User name: </label>
             <input type="text" id="user_name" name="user_name" required>
             <label for="password">Password name: </label>
             <input type="password" id="password" name="password" required>
             <button type="submit">Login now</button>
+           
         </form>
+         <p>Or</p>
+
+        <a href="/users/sign-up">Register now</a>
     </div>
+</div>
