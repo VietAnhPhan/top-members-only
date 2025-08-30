@@ -6,6 +6,12 @@ async function getAllUsers() {
   return rows;
 }
 
+async function getAllUsernames() {
+  const { rows } = await pool.query("SELECT id, user_name FROM users");
+
+  return rows;
+}
+
 async function getUserByUsername(username) {
   const { rows } = await pool.query(
     "SELECT * FROM users WHERE user_name = ($1)",
@@ -77,4 +83,5 @@ module.exports = {
   getPostsByUsername,
   upgradeMembership,
   getAllPosts,
+  getAllUsernames,
 };

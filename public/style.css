@@ -126,6 +126,7 @@ header a{
     display: flex;
     justify-content: center;
     width: 100%;
+    gap: 2rem;
 }
 
 .content__inner_bg_color{
@@ -171,4 +172,10 @@ footer{
     display: flex;
     flex-direction: column;
  
+}
+
+.member__lists{
+      background-color: aliceblue;
+      padding: 1rem 2rem;
+    border-radius: 10px;
 }

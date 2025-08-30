@@ -12,6 +12,8 @@ const db = require("./db/pool");
 const userRouter = require("./routes/userRouter");
 const authRouter = require("./routes/authRouter");
 const postRouter = require("./routes/postRouter");
+const indexRouter = require("./routes/indexRouter");
+
 const posts = require("./models/post");
 
 const app = express();
@@ -43,10 +45,7 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  // console.log(res.locals.posts);
-  res.render("index", { title: "Login", user: req.user });
-});
+app.get("/", indexRouter);
 
 app.use(
   "/users",

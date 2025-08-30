@@ -1,8 +1,8 @@
 <%- include('header', {title: title}) %>
-  
-    <% if (locals.user) {%>
-      <div class="content__wrapper">
-    <h1 class="content__title">Thoughts from junior, senior developers...</h1>
+
+  <% if (locals.user) {%>
+    <div class="content__wrapper">
+      <h1 class="content__title">Thoughts from junior, senior developers...</h1>
       <div class="content__inner">
         <div class="content__post_list">
           <% if(locals.posts) {%>
@@ -33,15 +33,30 @@
                 <% }) %>
                   <% } %>
         </div>
+        <% if (locals.user.role==='admin' ) {%>
+          <div class="member__lists">
+
+            <h3>List of members</h3>
+            <% if (locals.members) {%>
+              <ul>
+                <% locals.members.forEach(member=>{ %>
+                  <li>
+                    <%=member.user_name %>
+                  </li>
+                  <% }) %>
+              </ul>
+              <%}%>
+          </div>
       </div>
-  </div>
-  <% } else { %>
-
-     
-    <%- include('login') %>
-      <%}%>
+    </div>
+    <% } %>
+      <% } else { %>
 
 
+        <%- include('login') %>
+          <%}%>
 
 
-        <%- include('footer') %>
+
+
+            <%- include('footer') %>
