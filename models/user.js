@@ -31,7 +31,7 @@ async function getAllPosts() {
 }
 
 async function createUser(user) {
-  if (user.role) {
+  if (user.role === "admin") {
     await pool.query(
       "INSERT INTO users (first_name, last_name, user_name, password, role) VALUES ($1, $2, $3, $4, $5)",
       [
@@ -42,13 +42,11 @@ async function createUser(user) {
         user.role,
       ]
     );
-  } else if (!user.role) {
-    if (user.role) {
-      await pool.query(
-        "INSERT INTO users (first_name, last_name, user_name, password) VALUES ($1, $2, $3, $4)",
-        [user.first_name, user.last_name, user.user_name, user.password]
-      );
-    }
+  } else if (user.role === "") {
+    await pool.query(
+      "INSERT INTO users (first_name, last_name, user_name, password) VALUES ($1, $2, $3, $4)",
+      [user.first_name, user.last_name, user.user_name, user.password]
+    );
   }
 }
 
