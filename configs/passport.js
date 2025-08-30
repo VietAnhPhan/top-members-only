@@ -2,6 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const db = require("../db/pool");
+const userModel = require("../models/user");
 
 passport.use(
   new LocalStrategy(
@@ -11,12 +12,7 @@ passport.use(
     },
     async (username, password, done) => {
       try {
-        const { rows } = await db.query(
-          "SELECT * FROM users WHERE user_name = $1",
-          [username]
-        );
-
-        const user = rows[0];
+        const user = await userModel.getUserByUsername(username);
 
         if (!user) {
           return done(null, false, { message: "Incorrect username" });
