@@ -62,7 +62,20 @@ app.use(
   userRouter
 );
 
-app.use("/posts", postRouter);
+app.use(
+  "/posts",
+  (req, res, next) =>
+    passport.authenticate("local", function (err, user, info, status) {
+      if (err) {
+        return next(err);
+      }
+      if (!req.user) {
+        return res.redirect("/");
+      }
+      next();
+    })(req, res, next),
+  postRouter
+);
 
 app.use("/", authRouter);
 
